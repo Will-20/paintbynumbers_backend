@@ -1,5 +1,4 @@
 
-from PIL import Image, ImageFilter
 import numpy as np
 import time
 from remove_small_pixels import remove_small_pixels
@@ -73,50 +72,13 @@ def regionise_image(im, num_colours, distance='euclidean'):
         index_map = euclid_closest_centroid(pixels, k_centroids).reshape(height, width)
     return index_map, k_centroids
 
-# Converts an image into its contours
-def convert(image: Image, num_colours: int):
 
-    image = image.convert('RGB')
 
-    # Resize image
-    start = time.time()
-
-    mywidth = 1400
-    wpercent = (mywidth/float(image.size[0]))
-    myheight = int((float(image.size[1])*float(wpercent)))
-    resized_image = image.resize((mywidth,myheight), resample=Image.Resampling.HAMMING).filter(ImageFilter.BLUR)
-
-    print("Resized Image " + str(time.time() - start) + "s")
-
-    # Euclidean-colourise
-
-    index_map, k_centroids = regionise_image(resized_image, num_colours, distance='euclidean')
-    print("Obtained Colours " + str(time.time() - start) + "s")
-
-    print(k_centroids)
-
-    index_map, outline_with_numbers_image = remove_small_pixels(index_map)
-    regioned_image = k_centroids[index_map].astype(np.uint8)
-    
-    print("Regioned Image " + str(time.time() - start) + "s")
-
-    # Get outline
-
-    regioned_image = k_centroids[index_map].astype(np.uint8)
-    
-    smoothed_im = Image.fromarray(regioned_image)
-    outline_image = Image.fromarray(outline_with_numbers_image)
-    
-    smoothed_im.save("image.png")
-    outline_image.save("image_outline.png")
-
-    print("Saved Images " + str(time.time() - start) + "s")
-
-def main():
-    image = Image.open("/Users/Somethingsensible/personal_projects/paintbynumbers/paintbynumbers/tiger.jpg")
-    convert(image, 30)
+# def main():
+#     image = Image.open("/Users/Somethingsensible/personal_projects/paintbynumbers/paintbynumbers/tiger.jpg")
+#     convert(image, 30)
 
     
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
 
