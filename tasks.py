@@ -5,33 +5,19 @@ from botocore.exceptions import ClientError
 from time import sleep
 import numpy as np
 from convert import regionise_image, remove_small_pixels
+import io
 
-@shared_task(bind=True)
-def convert_task(self, imageId):
-    self.update_state(state='PROCESSING', meta={"progress": 0})
-    sleep(3)
-    self.update_state(state='PROCESSING', meta={"progress": 33})
-    sleep(3)
-    self.update_state(state='PROCESSING', meta={"progress": 66})
-    sleep(3)
-    self.update_state(state='PROCESSING', meta={"progress": 99})
-    sleep(3)
-    return {"result": "Task is Done", "progress": 100}
+from aws_utils import get_image, put_image
 
 # Converts an image into its contours
 @shared_task(bind=True)
-def convert(self, name: str, num_colours: str, mywidth: str):
+def convert(self, image_id: str, image_name: str, num_colours: str, mywidth: str):
     self.update_state(state='PROCESSING', meta={"progress": "STARTED"})
     
     num_colours = int(num_colours)
     mywidth = int(mywidth)
-
-
-    image = Image.open("130882.png")
-
+    image = get_image(image_id)
     image = image.convert('RGB')
-    
-
     wpercent = (mywidth/float(image.size[0]))
     myheight = int((float(image.size[1])*float(wpercent)))
     resized_image = image.resize((mywidth,myheight), resample=Image.Resampling.HAMMING).filter(ImageFilter.BLUR)
@@ -48,15 +34,7 @@ def convert(self, name: str, num_colours: str, mywidth: str):
     outline_image = Image.fromarray(outline_with_numbers_image)
     self.update_state(state='PROCESSING', meta={"progress": "OBTAINED OUTLINE"})
 
-    # Save in bucket instead?
-    smoothed_im.save("image.png")
-    outline_image.save("image_outline.png")
-    return {"result": "Task is Done", "progress": "FINISHED"}
+    put_image(smoothed_im, image_id+"_filled")
+    put_image(outline_image, image_id+"_outline")
 
-    # s3_client = boto3.client('s3')
-    # try:
-    #     response = s3_client.upload_file(name, "paint-by-numbers-image-data")
-    # except ClientError as e:
-    #     print(e)
-    #     return False
-    # return True
+    return {"result": "Task is Done", "progress": "FINISHED"}

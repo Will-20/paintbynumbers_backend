@@ -50,9 +50,7 @@ def get_k_colours(pixels, k, distance='euclidean', num_iter=5):
     if distance=='euclidean':
         for i in range(num_iter):
             closest = euclid_closest_centroid(pixels, centroids)
-            print("got closest")
             centroids = move_centroids(pixels, closest, centroids)
-            print("got centroids")
         return centroids
     elif distance == 'redmean':
         for i in range(num_iter):
@@ -72,13 +70,4 @@ def regionise_image(im, num_colours, distance='euclidean'):
         index_map = euclid_closest_centroid(pixels, k_centroids).reshape(height, width)
     return index_map, k_centroids
 
-
-
-# def main():
-#     image = Image.open("/Users/Somethingsensible/personal_projects/paintbynumbers/paintbynumbers/tiger.jpg")
-#     convert(image, 30)
-
-    
-# if __name__ == "__main__":
-#     main()
 

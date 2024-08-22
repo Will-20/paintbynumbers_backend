@@ -3,7 +3,7 @@ from PIL import Image
 import time
 from celery.result import AsyncResult
 
-from tasks import convert_task, convert
+from tasks import convert
 from utils import celery_init_app
 
 app = Flask(__name__)
@@ -21,11 +21,11 @@ celery = celery_init_app(app)
 def task_start():
 
     image_id = request.form['image_id']
-    # image_name = request.form['image_name']
+    image_name = request.form['image_name']
     num_colours = request.form['num_colours']
     mywidth = request.form['width']
 
-    task = convert.delay(image_id, num_colours, mywidth)
+    task = convert.delay(image_id, image_name, num_colours, mywidth)
     return {"task_id": task.id}
 
 
