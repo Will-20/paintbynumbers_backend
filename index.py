@@ -23,6 +23,7 @@ def task_start():
     image_id = request.form['image_id']
     image_name = request.form['image_name']
     num_colours = request.form['num_colours']
+    print(num_colours)
     mywidth = request.form['width']
 
     task = convert.delay(image_id, image_name, num_colours, mywidth)

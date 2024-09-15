@@ -1,0 +1,7 @@
+
+# Photos
+*.png
+
+# Pycache
+**/__pycache__/
+
