@@ -4,4 +4,5 @@ celery==5.4.0
 Flask==3.0.3
 numpy==2.1.1
 Pillow==10.4.0
-skimage==0.0
+scikit-image==0.23.2
+gunicorn==23.0.0
