@@ -12,8 +12,6 @@ from utils import celery_init_app
 app = Flask(__name__)
 app.config.from_mapping(
     CELERY=dict(
-        # broker_url="redis://default:AYDaAAIjcDE2MmE1NjMxMjA2NmU0YTY0YTE5MjM5NWQyMGYzMjA1NnAxMA@normal-ray-32986.upstash.io:6379",
-        # result_backend="redis://default:AYDaAAIjcDE2MmE1NjMxMjA2NmU0YTY0YTE5MjM5NWQyMGYzMjA1NnAxMA@normal-ray-32986.upstash.io:6379",
         broker_url=f"{os.getenv("REDISCLOUD_URL")}/0",
         result_backend=f"{os.getenv("REDISCLOUD_URL")}/0",
     )
