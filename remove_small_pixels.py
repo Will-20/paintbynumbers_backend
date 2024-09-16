@@ -1,4 +1,3 @@
-from PIL import Image, ImageFilter, ImageFont, ImageDraw
 import numpy as np
 import time
 from skimage.filters.rank import majority

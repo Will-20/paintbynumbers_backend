@@ -1,11 +1,7 @@
 from celery import shared_task
 from PIL import Image, ImageFilter
-import boto3
-from botocore.exceptions import ClientError
-from time import sleep
 import numpy as np
 from convert import regionise_image, remove_small_pixels
-import io
 
 from aws_utils import get_image, put_colours, put_image
 
