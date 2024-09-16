@@ -1,5 +1,4 @@
 from flask import Flask, request
-from PIL import Image
 from celery.result import AsyncResult
 import os
 
@@ -7,7 +6,7 @@ from tasks import convert
 from utils import celery_init_app
 
 # from dotenv import load_dotenv
-# load_dotenv()
+# load_dotenv('.env')
 
 app = Flask(__name__)
 app.config.from_mapping(
@@ -16,6 +15,9 @@ app.config.from_mapping(
         result_backend=f"{os.getenv("REDISCLOUD_URL")}/0",
     )
 )
+
+print(os.getenv("REDISCLOUD_URL"))
+
 celery = celery_init_app(app)
 
 @app.route('/api/upload', methods=['POST'])
