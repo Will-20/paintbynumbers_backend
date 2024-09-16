@@ -1,6 +1,5 @@
-from flask import Flask, jsonify, request
+from flask import Flask, request
 from PIL import Image
-import time
 from celery.result import AsyncResult
 
 from tasks import convert

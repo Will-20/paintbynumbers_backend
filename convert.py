@@ -1,7 +1,5 @@
 
 import numpy as np
-import time
-from remove_small_pixels import remove_small_pixels
 
 # These functions return the centroids, they compute k-means
 # -----------------------------------------------------------------------------------------
