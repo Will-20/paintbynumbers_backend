@@ -1,7 +1,10 @@
 
+.env
+
 # Photos
 *.png
 
 # Pycache
 **/__pycache__/
 
+dump.rdb
