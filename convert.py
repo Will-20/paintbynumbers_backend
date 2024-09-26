@@ -37,7 +37,7 @@ def move_centroids(points, closest, centroids):
         if cluster.shape[0] == 0:
             new_centroids.append(points[np.random.choice(points.shape[0], 1, replace=False)][0])
         else:
-            new_centroids.append(np.cbrt((cluster**3).mean(axis=0)))
+            new_centroids.append(np.sqrt((cluster**2).mean(axis=0)))
     return np.asarray(new_centroids)
 
     # print(points[closest==0].shape)
