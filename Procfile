@@ -1,2 +1,2 @@
 web: gunicorn index:app --log-file=-
-worker: celery -A index.celery worker --loglevel=INFO --concurrency 2
+worker: celery -A index.celery worker --loglevel=INFO --concurrency 1
