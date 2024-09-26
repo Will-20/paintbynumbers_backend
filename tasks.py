@@ -20,7 +20,7 @@ def convert(self, image_id: str, image_name: str, num_colours: str, mywidth: str
     resized_image = image.resize((mywidth,myheight), resample=Image.Resampling.HAMMING).filter(ImageFilter.BLUR)
     self.update_state(state='PROCESSING', meta={"progress": f"Looking for common colours"})
 
-    index_map, k_centroids = regionise_image(resized_image, num_colours, distance='redmean')
+    index_map, k_centroids = regionise_image(resized_image, num_colours)
     put_colours(image_id, k_centroids)
     self.update_state(state='PROCESSING', meta={"progress": "Filling in regions"})
 
