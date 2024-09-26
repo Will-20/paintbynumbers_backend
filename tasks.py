@@ -33,5 +33,7 @@ def convert(self, image_id: str, image_name: str, num_colours: str, mywidth: str
     put_image(smoothed_im, image_id+"_filled")
     put_image(outline_image, image_id+"_outline")
 
+    self.update_state(state='PROCESSING', meta={"progress": "Finished"})
+
     return {"result": "Task is Done", "progress": "Finished"}
 
