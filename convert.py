@@ -60,7 +60,7 @@ def get_k_colours(pixels, k, distance='euclidean', num_iter=5):
 
 def regionise_image(im, num_colours, distance='euclidean'):
     width, height = im.size
-    pixels = np.array(im).astype('float32').reshape(width*height, 3)
+    pixels = np.array(im).astype('float16').reshape(width*height, 3)
     k_centroids = np.round(get_k_colours(pixels, num_colours))
     if distance == 'redmean':
         index_map = redmean_closest_centroid(pixels, k_centroids).reshape(height, width)
